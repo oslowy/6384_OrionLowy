@@ -1,0 +1,286 @@
+The schedule needs to include a time range of 60 because that is the LCM of all the periods.
+
+Snapshot of slack at time = 0
+Task	Slack
+A	20 - 6 = 14
+B	10 - 1 = 9
+C	15 - 4 = 11
+D	30 - 1 = 29
+E	10 - 3 = 7
+
+Run task E first.
+
+At time = 2, slack of E and B are equal (slack = 7). Keep running E to save a context switch.
+
+Task E completes at time = 3.
+
+Snapshot of slack at time = 3
+Task	Slack
+A	(20 - 3) - 6 = 11
+B	(10 - 3) - 1 = 6
+C	(15 - 3) - 4 = 8
+D	(30 - 3) - 1 = 26
+
+Start task B next.
+Task B completes at time = 4.
+
+Snapshot of slack at time = 4
+Task	Slack
+A	(20 - 4) - 6 = 10
+C	(15 - 4) - 4 = 7
+D	(30 - 4) - 1 = 25
+
+Start task C next.
+
+At time = 7, slack of C and A are equal (slack = 7). Keep running C to save a context switch.
+
+Task C completes at time = 8.
+
+Snapshot of slack at time = 8
+Task	Slack
+A	(20 - 8) - 6 = 6
+D	(30 - 8) - 1 = 21
+
+Start task A next.
+
+At time = 10, new instances of B and E arrive with deadlines both = 20.
+
+Snapshot of slack at time = 10
+Task	Slack
+A	(20 - 10) - (6 - 2) = 6
+B	(20 - 10) - 1 = 9
+D	(30 - 10) - 1 = 21
+E	(20 - 10) - 3 = 7
+
+At time = 11, slack of A and E are equal (slack = 6). Keep running A to save a context switch.
+
+Snapshot of slack at time = 11
+Task	Slack
+A	(20 - 11) - (6 - 3) = 6
+B	(20 - 11) - 1 = 8
+D	(30 - 11) - 1 = 18
+E	(20 - 11) - 3 = 6
+
+At time = 12, slack of E (= 5) is less than slack of A (= 6). Switch to task E even though task A is not finished yet.
+
+Snapshot of slack at time = 12
+Task	Slack
+A	(20 - 12) - (6 - 4) = 6
+B	(20 - 12) - 1 = 7
+D	(30 - 12) - 1 = 17
+E	(20 - 12) - 3 = 5
+
+At time = 13, slack of E and A are equal (slack = 5). Keep running E to save a context switch.
+
+Snapshot of slack at time = 13
+Task	Slack
+A	(20 - 13) - (6 - 4) = 5
+B	(20 - 13) - 1 = 6
+D	(30 - 13) - 1 = 16
+E	(20 - 13) - (3 - 1) = 5
+
+At time = 14, slack of A (= 4) is less than slack of E (= 5). Switch to task A even though task E is not finished yet.
+
+Snapshot of slack at time = 14
+Task	Slack
+A	(20 - 14) - (6 - 4) = 4
+B	(20 - 14) - 1 = 5
+D	(30 - 14) - 1 = 15
+E	(20 - 14) - (3 - 2) = 5
+
+At time = 15, slack of A, B, and E are equal (slack = 4). Keep running A to save a context switch.
+A new instance of task C arrives with deadline = 30.
+
+Task A completes at time = 16.
+
+Snapshot of slack at time = 16
+Task	Slack
+B	(20 - 16) - 1 = 3
+C	(30 - 16) - 4 = 10
+D	(30 - 16) - 1 = 15
+E	(20 - 16) - (3 - 2) = 3
+
+At time = 16, slack of B and E are still equal (slack = 3). Arbitrarily choose one to resume first.
+* Since task E had been running more recently than task B, resume task E.
+
+Task E completes at time = 17.
+
+Run task B next.
+
+Task B completes at time = 18.
+
+Snapshot of slack at time = 18
+Task	Slack
+C	(30 - 18) - 4 = 8
+D	(30 - 18) - 1 = 11
+
+Run task C next.
+
+At time = 20, new instances of task A, B, and E arrive.
+
+Snapshot of slack at time = 20
+Task	Slack
+A	(40 - 20) - 6 = 14
+B	(30 - 20) - 1 = 9
+C	(30 - 20) - (4 - 2) = 8
+D	(30 - 20) - 1 = 9
+E	(30 - 20) - 3 = 7
+
+The slack of E (= 7) is now the least slack, so E has to preempt the running task (C).
+
+Snapshot of slack at time = 22
+Task	Slack
+A	(40 - 22) - 6 = 12
+B	(30 - 22) - 1 = 7
+C	(30 - 22) - (4 - 2) = 6
+D	(30 - 22) - 1 = 7
+E	(30 - 22) - (3 - 2) = 7
+
+Task C is now the least slack (= 6), so C has to preempt the running task (E).
+
+Task C completes at time = 24.
+
+Snapshot of slack at time = 24
+Task	Slack
+A	(40 - 24) - 6 = 10
+B	(30 - 24) - 1 = 5
+D	(30 - 24) - 1 = 5
+E	(30 - 24) - (3 - 2) = 5
+
+===Propagating error fix up to here======================================================================
+
+Run task D next.
+
+Task D completes at time = 23.
+
+Snapshot of slack at time = 23
+Task	Slack
+A	(40 - 23) - 6 = 11
+
+Run task A next.
+
+Task A completes at time = 29.
+
+The processor is idle until time = 30.
+
+New instances of tasks B, C, D, and E arrive at time = 30.
+
+Snapshot of slack at time = 30
+Task	Slack
+B	(40 - 30) - 1 = 9
+C	(45 - 30) - 4 = 11
+D	(60 - 30) - 1 = 29
+E	(40 - 30) - 3 = 7
+
+Since the slack values for tasks B through E are the same as they were at time 0, and task A did not execute between time = 0 and 8, the pattern of execution from time = 30 to 38 is the same as the pattern from time = 0 to 8. Specifically, tasks E, B, and C complete in that order.
+
+Snapshot of slack at time = 38
+Task	Slack
+D	(60 - 38) - 1 = 21
+
+Run task D next.
+
+Task D completes at time = 39.
+
+The processor is idle until time = 40.
+
+New instances of tasks A, B, and E arrive at time = 40.
+
+Snapshot of slack at time = 40
+Task	Slack
+A	(60 - 40) - 6 = 14
+B	(50 - 40) - 1 = 9
+E	(50 - 40) - 3 = 7
+
+Since the slack values for tasks A, B, and E are the same as they were at time 0, and no other task executed between time = 0 and 4, the pattern of execution from time = 40 to 44 is the same as the pattern from time = 0 to 4. Specifically, tasks E and B complete in that order.
+
+Snapshot of slack at time = 44
+Task	Slack
+A	(60 - 44) - 6 = 10
+
+Run task A next.
+
+At time = 45, a new instance of task C arrives.
+
+Snapshot of slack at time = 45
+Task	Slack
+A	(60 - 45) - (6 - 1) = 10
+C	(60 - 45) - 4 = 11
+
+At time = 47, slack of C (= 9) is less than slack of A (= 10). Switch to task C even though task A is not finished yet.
+
+Snapshot of slack at time = 47
+Task	Slack
+A	(60 - 47) - (6 - 3) = 10
+C	(60 - 47) - 4 = 9
+
+At time = 49, slack of A (= 8) is less than slack of C (= 9). Switch to task A even though task C is not finished yet.
+
+Snapshot of slack at time = 49
+Task	Slack
+A	(60 - 49) - (6 - 3) = 8
+C	(60 - 49) - (4 - 2) = 9
+
+At time = 50, new instances of tasks E and B arrive. The slack of E (= 7) is the new least slack,
+so preempt the running task A and begin running task E.
+
+Snapshot of slack at time = 50
+Task	Slack
+A	(60 - 50) - (6 - 4) = 8
+B	(60 - 50) - 1 = 9
+C	(60 - 50) - (4 - 2) = 8
+E	(60 - 50) - 3 = 7
+
+At time = 52, slack of both A and C (= 6) are less than slack of E (= 7). Either A or C needs to
+preempt task E. Arbitrarily choose one of these.
+* Since task A had been running more recently than task C, resume task A.
+
+Snapshot of slack at time = 52
+Task	Slack
+A	(60 - 52) - (6 - 4) = 6
+B	(60 - 52) - 1 = 7
+C	(60 - 52) - (4 - 2) = 6
+E	(60 - 52) - (3 - 2) = 7
+
+At time = 53, slack of C (= 5) is less than slack of A (= 6). Switch to task C.
+
+Snapshot of slack at time = 53
+Task	Slack
+A	(60 - 53) - (6 - 5) = 6
+B	(60 - 53) - 1 = 6
+C	(60 - 53) - (4 - 2) = 5
+E	(60 - 53) - (3 - 2) = 6
+
+Task C completes at time = 55.
+
+Snapshot of slack at time = 55
+Task	Slack
+A	(60 - 55) - (6 - 5) = 4
+B	(60 - 55) - 1 = 4
+E	(60 - 55) - (3 - 2) = 4
+
+Slack is equal (= 4) for all ready tasks. Choose one arbitrarily.
+* Since task A had been running the most recently, resume it.
+
+Task A completes at time = 56.
+
+Snapshot of slack at time = 56
+Task	Slack
+B	(60 - 56) - 1 = 3
+E	(60 - 56) - (3 - 2) = 3
+
+Slack is equal (= 3) for all ready tasks. Choose one arbitrarily.
+* Since task E had been running the most recently, resume it.
+
+Task E completes at time = 57.
+
+The only task left is task B.
+
+Task B completes at time = 58.
+
+The processor is idle from time = 58 to 60.
+
+The complete pattern of execution from time = 0 to 60 repeats after time = 60, since 60 is the LCM of all the periods.
+
+
+
