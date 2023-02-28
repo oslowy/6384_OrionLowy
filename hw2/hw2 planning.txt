@@ -1,0 +1,21 @@
+RTS HW2 planning
+Due: 3/29 (We)
+
+Read paper:
+I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-time tasks on variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
+
+# Schedule sporadic tasks
+- Accept tasks as they arrive dynamically; not predetermined at start
+- Schedule tasks to respect deadlines
+- Reject tasks that are unschedulable given prior scheduled tasks
+
+# Adjust execution speed to save energy
+- Slow down tasks with extra time (according to paper's guidelines)
+
+# Respect context switching times
+- Whenever changing from one task to another
+- When preempt or when complete, both need context switch
+- Paper does not address this issue!
+- "Computation time" is longer than listed by at least 1x CST and more if multiple context switches (preempts) occur
+
+# Read input file, write output file
