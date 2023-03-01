@@ -2,7 +2,8 @@
 _Due: 3/29 (We)_
 
 Read paper:
-I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-time tasks on variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
+I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-time tasks on 
+variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
 
 ## Acceptance test
 - Reject tasks that cannot be feasibly scheduled.
