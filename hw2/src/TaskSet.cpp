@@ -8,7 +8,7 @@ Task &TaskSet::get(int index) {
 	return tasks.at(index);
 }
 
-/* Maintain the task set in ascending order by deadline. Assumes the existing 
+/* Maintain the task set in EDF order. Assumes the existing 
 	contents of the set are already in this order. */
 void TaskSet::put(Task &newTask) {
 	int count = tasks.size();
