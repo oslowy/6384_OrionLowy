@@ -1,10 +1,18 @@
 #include "TaskSet.h"
 
-int TaskSet::count() {
+TaskSet::TaskSet(const TaskSet &other) {
+	int otherCount = other.count();
+	
+	for(int i=0; i<otherCount; i++) {
+		tasks.push_back(other.get(i));
+	}
+}
+
+int TaskSet::count() const {
 	return tasks.size();
 }
 
-Task &TaskSet::get(int index) {
+Task &TaskSet::get(int index) const {
 	return tasks.at(index);
 }
 

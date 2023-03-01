@@ -1,16 +1,15 @@
 #pragma once
 
-#include <algorithm>
 #include "TaskSet.h"
 
-float utilization(TaskSet taskSet, int index, float time) {
+float utilization(const TaskSet &taskSet, int targetIndex, float time) {
 	float remainCompTimeSum = 0.0f;
 	
-	for(int i=0; i < index; i++) {
+	for(int i=0; i < targetIndex; i++) {
 		remainCompTimeSum += taskSet.get(i).compTime;
 	}
 	
-	float untilDeadline = taskSet.get(index).deadline - time;
+	float untilDeadline = taskSet.get(targetIndex).deadline - time;
 	
 	return remainCompTimeSum / untilDeadline;
 }

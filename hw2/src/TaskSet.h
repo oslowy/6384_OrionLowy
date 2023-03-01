@@ -13,8 +13,10 @@ struct Task {
 
 class TaskSet {
 public:
-	int count();
-	Task &get(int index);
+	TaskSet(const TaskSet &other);
+
+	int count() const;
+	Task &get(int index) const;
 	void put(Task &newTask);
 
 private:
