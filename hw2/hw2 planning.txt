@@ -5,6 +5,17 @@ Read paper:
 I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-time tasks on 
 variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
 
+## Tasks
+- Utilization
+	- Return max and argmax together?
+- Acceptance test
+- Speed adjust
+- Run tasks from schedule
+	- Arrive tasks
+	- Update remaining comp time (based on clock speed)
+	- Complete tasks
+- Read input and print output
+
 ## Acceptance test
 - Reject tasks that cannot be feasibly scheduled.
 
