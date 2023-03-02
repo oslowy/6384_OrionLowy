@@ -9,8 +9,8 @@ bool AcceptanceTest::putIfAcceptable(
 	testTasks->put(newTask);
 	
 	/* Compute max utilization on test set and reject new task if above 1 */
-	float u = maxUtilization(*testTasks, time);
-	bool newTaskAccepted = u <= 1.0f;
+	UtilizationResult u = maxUtilization(*testTasks, time);
+	bool newTaskAccepted = u.value <= 1.0f;
 	
 	/* Update the active task set according to test result */
 	if(newTaskAccepted) {
@@ -19,19 +19,4 @@ bool AcceptanceTest::putIfAcceptable(
 	} else {
 		delete testTasks;
 	}
-}
-
-float AcceptanceTest::maxUtilization(const TaskSet &testTasks, float time) {
-	float maxSoFar = 0.0f;
-	
-	int numTasks = testTasks.count();
-	for(int i=0; i<numTasks; i++) {
-		float u_i = utilization(testTasks, i, time);
-		
-		if(u_i > maxSoFar) {
-			maxSoFar = u_i;
-		}
-	}
-	
-	return maxSoFar;
 }
