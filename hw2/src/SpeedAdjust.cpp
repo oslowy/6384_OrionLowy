@@ -14,7 +14,7 @@ SpeedVector SpeedAdjust::taskSpeeds(const TaskSet &tasks, float time) {
 			speeds.push_back(u.value);
 		}
 		
-		/* Recursively call on the tasks after the last task in this round */
+		/* Recursively call for the tasks after the last task in this round */
 		TaskSet laterTasks = getLaterTasks(tasks, lastTaskIndex);
 		float lastTaskDeadline = tasks.get(lastTaskIndex).deadline;
 		
@@ -29,11 +29,10 @@ SpeedVector SpeedAdjust::taskSpeeds(const TaskSet &tasks, float time) {
 }
 
 TaskSet SpeedAdjust::getLaterTasks(const TaskSet &tasks, int lastTaskIndexSoFar) {
-	TaskSet laterTasks;
+	TaskSet laterTasks = tasks;
 	
-	int totalNumTasks = tasks.count();
-	for(int i = lastTaskIndexSoFar + 1; i < totalNumTasks; i++) {
-		laterTasks.push_back(tasks.get(i));
+	for(int i = 0; i <= lastTaskIndexSoFar; i++) {
+		laterTasks.removeFirst();
 	}
 	
 	return laterTasks;

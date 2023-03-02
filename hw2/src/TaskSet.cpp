@@ -34,3 +34,7 @@ void TaskSet::put(Task &newTask) {
 	/* Add the new item at the end if no existing item had a later deadline */
 	tasks.push_back(newTask);
 }
+
+void TaskSet::removeFirst() {
+	tasks.erase(tasks.begin());
+}

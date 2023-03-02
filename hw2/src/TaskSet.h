@@ -18,6 +18,7 @@ public:
 	int count() const;
 	Task &get(int index) const;
 	void put(Task &newTask);
+	void removeFirst();
 
 private:
 	vector<Task> tasks;
