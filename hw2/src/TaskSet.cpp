@@ -1,5 +1,7 @@
 #include "TaskSet.h"
 
+using namespace std;
+
 TaskSet::TaskSet(const TaskSet &other) {
 	int otherCount = other.count();
 	
