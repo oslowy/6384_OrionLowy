@@ -12,8 +12,9 @@ variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–
 - Speed adjust
 - Run tasks from schedule
 	- Arrive tasks
+	- Activate acceptance test and speed adjust
 	- Update remaining comp time (based on clock speed)
-	- Complete tasks
+	- Complete tasks and shift to next task
 - Read input and print output
 
 ## Acceptance test
