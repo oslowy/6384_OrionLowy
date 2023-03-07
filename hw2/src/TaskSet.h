@@ -6,9 +6,10 @@ using namespace std;
 
 struct Task {
 	int arrival;
-	float compTime;
+	float computeTime;
 	int deadline;
 	int switchTime;
+	float speed;
 };
 
 class TaskSet {

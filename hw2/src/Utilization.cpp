@@ -4,7 +4,7 @@ float Utilization::utilization(const TaskSet &taskSet, int targetIndex, float ti
 	/* Sum the computation times of tasks in order up to the target task */
 	float remainCompTimeSum = 0.0f;
 	for(int i=0; i < targetIndex; i++) {
-		remainCompTimeSum += taskSet.get(i).compTime;
+		remainCompTimeSum += taskSet.get(i).computeTime;
 	}
 	
 	/* Time left until the deadline of the target task */

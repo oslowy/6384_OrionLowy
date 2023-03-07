@@ -1,37 +1,41 @@
 #include "SpeedAdjust.h"
 
-SpeedVector SpeedAdjust::taskSpeeds(const TaskSet &tasks, float time) {
-	SpeedVector speeds;
-	
+void SpeedAdjust::updateTaskSpeeds(const TaskSet &tasks, float time) {
 	/* Skip recursion if tasks is empty */
 	if(!tasks.empty()) {
-		UtilizationResult u = maxUtilization(tasks, time);
+		UtilizationResult maxUtil = maxUtilization(tasks, time);
 		
 		/* Calculate speeds for tasks in order up  
 		    to the task with the max utilization */
-		int lastTaskIndex = u.index;
-		for(int i=0; i<=lastTaskIndex; i++) {
-			speeds.push_back(u.value);
+		int maxUtilIndex = maxUtil.index;
+		for(int i=0; i <= maxUtilIndex; i++) {
+			tasks.get(i).speed = maxUtil.value;
 		}
 		
 		/* Recursively call for the tasks after the last task in this round */
-		TaskSet laterTasks = getLaterTasks(tasks, lastTaskIndex);
-		float lastTaskDeadline = tasks.get(lastTaskIndex).deadline;
+		TaskSet laterTasks = getTasksAfterMaxUtil(tasks, maxUtilIndex);
+		float lastTaskDeadline = tasks.get(maxUtilIndex).deadline;
 		
-		SpeedVector laterTaskSpeeds = taskSpeeds(laterTasks, lastTaskDeadline);
+		updateTaskSpeeds(laterTasks, lastTaskDeadline);
 		
-		/* Concatenate the speeds from the later tasks */
-		speeds.insert(speeds.end(), laterTaskSpeeds.begin(), 
-			laterTaskSpeeds.end());
+		/* Merge in the speeds from the later tasks */
+		int firstLaterTaskIndex = maxUtilIndex + 1;
+		int numLaterTasks = tasks.count() - firstLaterTaskIndex;
+		
+		for(int i=0; i < numLaterTasks; i++) {
+			int offsetI = i + firstLaterTaskIndex;
+			
+			tasks.get(offsetI).speed = laterTasks.get(i).speed;
+		}
 	}
 	
 	return speeds;
 }
 
-TaskSet SpeedAdjust::getLaterTasks(const TaskSet &tasks, int lastTaskIndexSoFar) {
-	TaskSet laterTasks = tasks;
+TaskSet SpeedAdjust::getTasksAfterMaxUtil(const TaskSet &tasks, int maxUtilIndex) {
+	TaskSet laterTasks(tasks);
 	
-	for(int i = 0; i <= lastTaskIndexSoFar; i++) {
+	for(int i = 0; i <= maxUtilIndex; i++) {
 		laterTasks.removeFirst();
 	}
 	

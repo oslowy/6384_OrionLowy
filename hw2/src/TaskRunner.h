@@ -8,12 +8,10 @@ public:
 	~TaskRunner();
 	
 	void arriveTask(Task &task);
-	void runCurrentTask(float untilTime);
+	void runUntilArrival(float nextArrivalTime);
 	
 private:
-	void completeTask(int index);
-	int selectCurrentTask();
-	void switchCurrentTask(int index);
+	void completeCurrentTask();
 	void updateSpeeds();
 
 	TaskSet *acceptedIncompleteTasks;
