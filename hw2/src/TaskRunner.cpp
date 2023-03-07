@@ -25,14 +25,14 @@ void TaskRunner::arriveTask(Task &task) {
 	
 	/* Switch the current task if the new task landed in position 0 */
 	if(arrivalIndex == 0) {
-		//Context switch time: Need a way to read the prior running task information
+		contextSwitch();
 	}
 }
 
 void TaskRunner::runUntilArrival(float nextArrivalTime) { 
 	/* Run tasks while there are any running or ready */
 	while(acceptedIncompleteTasks->count() > 0) {
-		Task currentTask = acceptedIncompleteTasks->get(0);
+		Task &currentTask = acceptedIncompleteTasks->get(0);
 	
 		/* Calculate time until complete at current speed */
 		float completeTime = currentTask.computeTime / currentTask.speed;
@@ -60,9 +60,21 @@ void TaskRunner::runUntilArrival(float nextArrivalTime) {
 }
 
 void TaskRunner::completeCurrentTask() {
+	/* Advance the ready queue and begin the first waiting task */
 	acceptedIncompleteTasks->removeFirst();
 	
+	/* Add extra time for context switch to occur */
+	contextSwitch();
+	
 	//Report the task completed somehow...
+}
+
+void TaskRunner::contextSwitch() {
+	Task &newCurrentTask = acceptedIncompleteTasks->get(0);
+		
+	newCurrentTask.computeTime += switchOutTime + newCurrentTask.switchTime;
+		
+	switchOutTime = newCurrentTask.switchTime;
 }
 
 void TaskRunner::updateSpeeds() {
