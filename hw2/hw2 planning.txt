@@ -5,11 +5,13 @@ Read paper:
 I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-time tasks on 
 variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
 
-## Tasks
+## To do
 - Utilization
 	- Return max and argmax together?
 - Acceptance test
 - Speed adjust
+- Remaining computation time: add context switching time
+	- From outgoing and incoming task
 - Run tasks from schedule
 	- Arrive tasks
 	- Activate acceptance test and speed adjust
@@ -65,10 +67,10 @@ variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–
 	- Advance t to = D_k = the deadline of S_k
 - Output: adjusted processor speeds for all tasks in the system
 
-## Respect context switching times
+## Respect context switching times (implement this after basic implementation!)
 - Whenever changing from one task to another
 - When preempt or when complete, both need context switch
 - Paper does not address this issue!
-- "Computation time" is longer than listed by at least 1x CST and more if multiple context switches (preempts) occur
+- Add the context switch time to the computation time
 
 ## Read input file, write output file

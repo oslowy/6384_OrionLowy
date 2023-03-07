@@ -21,7 +21,8 @@ UtilizationResult Utilization::maxUtilization(const TaskSet &testTasks, float ti
 		float nextUtilization = utilization(testTasks, i, time);
 		
 		if(nextUtilization >= maxSoFar.value) {
-			maxSoFar = {nextUtilization, i};
+			maxSoFar.value = nextUtilization;
+			maxSoFar.index = i;
 		}
 	}
 	
