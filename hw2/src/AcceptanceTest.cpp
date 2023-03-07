@@ -1,22 +1,29 @@
 #include "AcceptanceTest.h"
 #include "Utilization.h"
 
-bool AcceptanceTest::putIfAcceptable(
+int AcceptanceTest::putIfAcceptable(
 	TaskSet *&acceptedIncompleteTasks, Task &newTask, float time) 
 {
 	/* Create test task set that includes new task */
 	TaskSet *testTasks = new TaskSet(*acceptedIncompleteTasks);
-	testTasks->put(newTask);
+	int arrivalIndex = testTasks->put(newTask);
 	
 	/* Compute max utilization on test set and reject new task if above 1 */
-	UtilizationResult u = maxUtilization(*testTasks, time);
-	bool newTaskAccepted = u.value <= 1.0f;
+	bool acceptable = isAcceptable(testTasks, time);
 	
 	/* Update the active task set according to test result */
-	if(newTaskAccepted) {
+	if(acceptable) {
 		delete acceptedIncompleteTasks;
 		acceptedIncompleteTasks = testTasks;
 	} else {
 		delete testTasks;
+		arrivalIndex = -1;
 	}
+	
+	return arrivalIndex;
+}
+
+bool AcceptanceTest::isAcceptable(TaskSet *testTasks, float time) {
+	UtilizationResult u = Utilization::maxUtilization(*testTasks, time);
+	return u.value <= 1.0f;
 }

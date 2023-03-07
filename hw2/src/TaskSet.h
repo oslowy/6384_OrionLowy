@@ -17,7 +17,10 @@ public:
 
 	int count() const;
 	Task &get(int index) const;
-	void put(Task &newTask);
+	
+	/* The return value signals where the new item was placed. */
+	int put(Task &newTask);
+	
 	void removeFirst();
 
 private:

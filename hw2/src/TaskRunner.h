@@ -1,20 +1,23 @@
 #pragma once
 
-#include "AcceptanceTest.h"
 #include "TaskSet.h"
-#include "Utilization.h"
 
 class TaskRunner {
 public:
-	bool arriveTask(Task &task);
+	TaskRunner();
+	~TaskRunner();
+	
+	void arriveTask(Task &task);
+	void runCurrentTask(float untilTime);
 	
 private:
 	void completeTask(int index);
-	void runCurrentTask(float untilTime);
-	void switchCurrentTask(Task &task);
+	int selectCurrentTask();
+	void switchCurrentTask(int index);
 	void updateSpeeds();
-	void validateNewTask(Task &task);
 
 	TaskSet *acceptedIncompleteTasks;
 	float currentTime;
+	
+	/* Need to record actual schedule when tasks started/preempted/completed */
 };

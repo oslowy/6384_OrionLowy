@@ -20,19 +20,22 @@ Task &TaskSet::get(int index) const {
 
 /* Maintain the task set in EDF order. Assumes the existing 
 	contents of the set are already in this order. */
-void TaskSet::put(Task &newTask) {
+int TaskSet::put(Task &newTask) {
 	int count = tasks.size();
 
-	/* Add new item just before the first existing item with a later deadline */
-	for(int i=0; i < count; i++) {
+	/* Find the first existing item with a later deadline */
+	int i=0;
+	for(; i < count; i++) {
 		if(newTask.deadline > tasks.at(i).deadline) {
-			tasks.insert(i, newTask);
-			return;
+			break;
 		}
 	}
 	
-	/* Add the new item at the end if no existing item had a later deadline */
-	tasks.push_back(newTask);
+	/* Add new item just before the first existing item with a later deadline */
+	tasks.insert(tasks.begin() + i, newTask);
+	
+	/* Return an int to signal where the new item was put */
+	return i;
 }
 
 void TaskSet::removeFirst() {
