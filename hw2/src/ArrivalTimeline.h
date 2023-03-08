@@ -5,4 +5,4 @@
 
 using namespace std;
 
-typedef queue<Task> ArrivalQueue;
+typedef queue<Task> ArrivalTimeline;

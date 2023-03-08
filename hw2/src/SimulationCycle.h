@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ArrivalQueue.h"
+#include "ArrivalTimeline.h"
 #include "OutputLogger.h"
 #include "TaskRunner.h"
 
@@ -8,7 +8,7 @@ class SimulationCycle {
 public:
 	SimulationCycle(TaskRunner *taskRunner, OutputLogger *outputLogger);
 	
-	void runArrivalQueue(ArrivalQueue &arrivals);
+	void runArrivalTimeline(ArrivalTimeline &arrivals);
 
 private:
 	TaskRunner *taskRunner;
