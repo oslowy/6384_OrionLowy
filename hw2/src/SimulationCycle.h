@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ArrivalTimeline.h"
-#include "OutputLogger.h"
 #include "TaskRunner.h"
 
 class SimulationCycle {
@@ -12,5 +11,4 @@ public:
 
 private:
 	TaskRunner *taskRunner;
-	OutputLogger *outputLogger;
 };

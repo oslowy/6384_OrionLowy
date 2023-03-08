@@ -1,10 +1,11 @@
 #pragma once
 
+#include "OutputLogger.h"
 #include "TaskSet.h"
 
 class TaskRunner {
 public:
-	TaskRunner();
+	TaskRunner(OutputLogger *outputLogger);
 	~TaskRunner();
 	
 	void arriveTask(Task &task);
@@ -21,5 +22,7 @@ private:
 	/* The time for the currently running task to context switch out. */
 	float switchOutTime;
 	
-	/* Need to record actual schedule when tasks started/preempted/completed */
+	/* Record the events to generate a schedule result */
+	/** Need to record actual schedule when tasks started/preempted/completed */
+	OutputLogger *outputLogger;
 };

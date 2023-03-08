@@ -4,7 +4,6 @@ SimulationCycle::SimulationCycle(
 	TaskRunner *taskRunner, OutputLogger *outputLogger) 
 {
 	this->taskRunner = taskRunner;
-	this->outputLogger = outputLogger;
 }
 
 void SimulationCycle::runArrivalTimeline(ArrivalTimeline &arrivals) {

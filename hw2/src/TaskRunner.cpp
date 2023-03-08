@@ -4,9 +4,11 @@
 #include "Utilization.h"
 #include "SpeedAdjust.h"
 
-TaskRunner::TaskRunner() {
+TaskRunner::TaskRunner(OutputLogger *outputLogger) {
 	acceptedIncompleteTasks = new TaskSet;
 	currentTime = 0.0f;
+	
+	this->outputLogger = outputLogger;
 }
 
 TaskRunner::~TaskRunner() {
