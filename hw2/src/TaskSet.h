@@ -1,16 +1,9 @@
 #pragma once
 
+#include "Task.h"
 #include <vector>
 
 using namespace std;
-
-struct Task {
-	int arrival;
-	float computeTime;
-	int deadline;
-	int switchTime;
-	float speed;
-};
 
 class TaskSet {
 public:

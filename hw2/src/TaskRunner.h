@@ -17,6 +17,8 @@ private:
 
 	TaskSet *acceptedIncompleteTasks;
 	float currentTime;
+	
+	/* The time for the currently running task to context switch out. */
 	float switchOutTime;
 	
 	/* Need to record actual schedule when tasks started/preempted/completed */
