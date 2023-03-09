@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Task.h"
+#include <string>
+
+using namespace std;
 
 class OutputLogger {
 public:
@@ -9,5 +12,7 @@ public:
 	void reportSpeedChanged(Task &task, float time);
 	
 private:
+	void reportEvent(Task &task, float time, string eventInfo);
+
 	/** String storing the output logs */
 };
