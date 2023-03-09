@@ -7,5 +7,6 @@ variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–
 
 ## To do
 - Read input and list arrival events
-- Iterating along arrival list, call TaskRunner methods
-- Record and output task start and completion events
+- Read discrete speed list and choose between them in SpeedAdjust
+* Iterating along arrival list, call TaskRunner methods
+@ Record and output task start and completion events
