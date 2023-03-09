@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Task.h"
+
 class OutputLogger {
 public:
 	void reportTaskScheduled(Task &task, float time);
