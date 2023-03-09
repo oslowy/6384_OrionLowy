@@ -1,9 +1,10 @@
 #pragma once
 
 struct Task {
-	int arrival;
+	int id;
+	float arrival;
 	float computeTime;
-	int deadline;
-	int switchTime;
+	float deadline;
+	float switchTime;
 	float speed;
 };

@@ -14,5 +14,5 @@ public:
 private:
 	void reportEvent(Task &task, float time, string eventInfo);
 
-	/** String storing the output logs */
+	string outputLogs;
 };
