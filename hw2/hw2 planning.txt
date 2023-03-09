@@ -6,7 +6,18 @@ I. Hong, M. Potkonjak, and M. B. Srivastava, “On-line scheduling of hard real-
 variable voltage processor,” Proc. Computer-Aided Design (ICCAD), pages 653–656, November 1998.
 
 ## To do
-- Read input and list arrival events
+
+### Draft implementation
+- Read input and extract list of arrival events
 - Read discrete speed list and choose between them in SpeedAdjust
-* Iterating along arrival list, call TaskRunner methods
-@ Record and output task start and completion events
+@ Iterating along arrival list, call TaskRunner methods
+* Record and output task start and completion events
+- Main script
+
+### Testing
+- Write test cases for lower-level features
+- Test whole program
+	- Create input files
+
+### Debug
+- ???
