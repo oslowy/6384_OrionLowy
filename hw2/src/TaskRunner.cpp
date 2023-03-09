@@ -65,20 +65,27 @@ void TaskRunner::completeCurrentTask() {
 	/* Advance the ready queue and begin the first waiting task */
 	acceptedIncompleteTasks->removeFirst();
 	
+	/** Report that a task completed */
+	
 	/* Add extra time for context switch to occur */
 	contextSwitch();
-	
-	//Report the task completed somehow...
 }
 
 void TaskRunner::contextSwitch() {
-	Task &newCurrentTask = acceptedIncompleteTasks->get(0);
+	/* Don't add time for context switch if the ready queue is empty */
+	if(acceptedIncompleteTasks->count() > 0) 
+	{
+		Task &newCurrentTask = acceptedIncompleteTasks->get(0);
 		
-	newCurrentTask.computeTime += switchOutTime + newCurrentTask.switchTime;
-		
-	switchOutTime = newCurrentTask.switchTime;
+		newCurrentTask.computeTime += switchOutTime + newCurrentTask.switchTime;
+		switchOutTime = newCurrentTask.switchTime;
+	}
+	
+	/** Report that a task started/resumed */
 }
 
 void TaskRunner::updateSpeeds() {
 	SpeedAdjust::updateTaskSpeeds(*acceptedIncompleteTasks);
+	
+	outputLogger->reportSpeedChanged()
 }
