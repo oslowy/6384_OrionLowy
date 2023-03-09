@@ -5,36 +5,37 @@
 #include "SpeedAdjust.h"
 
 TaskRunner::TaskRunner(OutputLogger *outputLogger) {
-	acceptedIncompleteTasks = new TaskSet;
+	acceptedTasks = new TaskSet;
 	currentTime = 0.0f;
 	
 	this->outputLogger = outputLogger;
 }
 
 TaskRunner::~TaskRunner() {
-	delete acceptedIncompleteTasks;
+	delete acceptedTasks;
 }
 
 void TaskRunner::arriveTask(Task &task) {
 	/* Pass the new task through the acceptance test */
 	int arrivalIndex = AcceptanceTest::putIfAcceptable(
-		acceptedIncompleteTasks, task, currentTime);
-		
-	/* Update the speed schedule if the new task was accepted */
-	if(arrivalIndex >= 0) {
-		updateSpeeds();
-	}
+		acceptedTasks, task, currentTime);
 	
 	/* Switch the current task if the new task landed in position 0 */
 	if(arrivalIndex == 0) {
 		contextSwitch();
 	}
+	
+	/* Update the speed schedule if the new task was accepted, whatever position
+	    in the queue it was placed in */
+	if(arrivalIndex >= 0) {
+		updateSpeeds();
+	}
 }
 
 void TaskRunner::runUntilArrival(float nextArrivalTime) { 
 	/* Run tasks while there are any running or ready */
-	while(acceptedIncompleteTasks->count() > 0) {
-		Task &currentTask = acceptedIncompleteTasks->get(0);
+	while(acceptedTasks->count() > 0) {
+		Task &currentTask = acceptedTasks->get(0);
 	
 		/* Calculate time until complete at current speed */
 		float completeTime = currentTask.computeTime / currentTask.speed;
@@ -61,11 +62,12 @@ void TaskRunner::runUntilArrival(float nextArrivalTime) {
 	currentTime = nextArrivalTime;
 }
 
-void TaskRunner::completeCurrentTask() {
-	/* Advance the ready queue and begin the first waiting task */
-	acceptedIncompleteTasks->removeFirst();
+void TaskRunner::completeCurrentTask() 
+{
+	outputLogger->reportTaskCompleted(acceptedTasks->get(0), currentTime);
 	
-	/** Report that a task completed */
+	/* Advance the ready queue and begin the first waiting task */
+	acceptedTasks->removeFirst();
 	
 	/* Add extra time for context switch to occur */
 	contextSwitch();
@@ -73,19 +75,19 @@ void TaskRunner::completeCurrentTask() {
 
 void TaskRunner::contextSwitch() {
 	/* Don't add time for context switch if the ready queue is empty */
-	if(acceptedIncompleteTasks->count() > 0) 
+	if(acceptedTasks->count() > 0) 
 	{
-		Task &newCurrentTask = acceptedIncompleteTasks->get(0);
+		Task &newCurrentTask = acceptedTasks->get(0);
 		
 		newCurrentTask.computeTime += switchOutTime + newCurrentTask.switchTime;
 		switchOutTime = newCurrentTask.switchTime;
+		
+		outputLogger->reportTaskScheduled(newCurrentTask, currentTime);
 	}
-	
-	/** Report that a task started/resumed */
 }
 
 void TaskRunner::updateSpeeds() {
-	SpeedAdjust::updateTaskSpeeds(*acceptedIncompleteTasks);
+	SpeedAdjust::updateTaskSpeeds(*acceptedTasks);
 	
-	outputLogger->reportSpeedChanged()
+	outputLogger->reportSpeedChanged(acceptedTasks->get(0), currentTime);
 }

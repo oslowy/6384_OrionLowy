@@ -2,10 +2,10 @@
 #include "Utilization.h"
 
 int AcceptanceTest::putIfAcceptable(
-	TaskSet *&acceptedIncompleteTasks, Task &newTask, float time) 
+	TaskSet *&acceptedTasks, Task &newTask, float time) 
 {
 	/* Create test task set that includes new task */
-	TaskSet *testTasks = new TaskSet(*acceptedIncompleteTasks);
+	TaskSet *testTasks = new TaskSet(*acceptedTasks);
 	int arrivalIndex = testTasks->put(newTask);
 	
 	/* Compute max utilization on test set and reject new task if above 1 */
@@ -13,8 +13,8 @@ int AcceptanceTest::putIfAcceptable(
 	
 	/* Update the active task set according to test result */
 	if(acceptable) {
-		delete acceptedIncompleteTasks;
-		acceptedIncompleteTasks = testTasks;
+		delete acceptedTasks;
+		acceptedTasks = testTasks;
 	} else {
 		delete testTasks;
 		arrivalIndex = -1;

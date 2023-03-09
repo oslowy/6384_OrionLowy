@@ -16,7 +16,7 @@ private:
 	void contextSwitch();
 	void updateSpeeds();
 
-	TaskSet *acceptedIncompleteTasks;
+	TaskSet *acceptedTasks;
 	float currentTime;
 	
 	/* The time for the currently running task to context switch out. */
